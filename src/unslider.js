@@ -28,7 +28,8 @@
 			items: '>ul',   // slides container selector
 			item: '>li',    // slidable items selector
 			easing: 'swing',// easing function to use for animation
-			autoplay: true  // enable autoplay on initialisation
+			autoplay: true,  // enable autoplay on initialisation
+			fade: false //use fade instead of slide
 		};
 
 		_.init = function(el, o) {
@@ -64,6 +65,11 @@
 			//  Set the relative widths
 			ul.css({position: 'relative', left: 0, width: (len * 100) + '%'});
 			li.css({'float': 'left', width: (_.max[0]) + 'px'});
+
+			if(o.fade == true){
+				li.css({'position': 'absolute','display': 'none'});
+				ul.find("li").eq(0).css({'display':'block'});
+			}
 
 			//  Autoslide
 			o.autoplay && setTimeout(function() {
@@ -156,11 +162,16 @@
 				//  Handle those pesky dots
 				el.find('.dot').eq(index).addClass('active').siblings().removeClass('active');
 
-				el.animate(obj, speed, easing) && ul.animate($.extend({left: '-' + index + '00%'}, obj), speed, easing, function(data) {
-					_.i = index;
+				if(o.fade == true){
+					ul.find("li:visible").fadeOut(speed);
+					ul.find("li").eq(index).fadeIn(speed);
+				} else {
+					el.animate(obj, speed, easing) && ul.animate($.extend({left: '-' + index + '00%'}, obj), speed, easing, function(data) {
+						_.i = index;
 
-					$.isFunction(o.complete) && !callback && o.complete(el, target);
-				});
+						$.isFunction(o.complete) && !callback && o.complete(el, target);
+					});
+				}
 			};
 		};
 
