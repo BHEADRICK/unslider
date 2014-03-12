@@ -163,6 +163,7 @@
 				el.find('.dot').eq(index).addClass('active').siblings().removeClass('active');
 
 				if(o.fade == true){
+					_.i = index;
 					ul.find("li:visible").fadeOut(speed);
 					ul.find("li").eq(index).fadeIn(speed);
 				} else {
