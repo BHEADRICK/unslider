@@ -28,8 +28,8 @@
 			items: '>ul',   // slides container selector
 			item: '>li',    // slidable items selector
 			easing: 'swing',// easing function to use for animation
-			autoplay: true,  // enable autoplay on initialisation
-            fade: false
+			autoplay: true, // enable autoplay on initialisation
+			fade: false     //use fade instead of slide
 		};
 
 		_.init = function(el, o) {
